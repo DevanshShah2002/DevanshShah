@@ -1,0 +1,162 @@
+/* ==========================================================================
+   ANIMATIONS — robot states, dog sequence, ambient effects
+   Only opacity/transform animations for 60fps. Everything skippable.
+   ========================================================================== */
+
+/* ---------- ambient ---------- */
+@keyframes screenIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes caretBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes glowPulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+@keyframes scanline { 0% { top: -10%; } 100% { top: 110%; } }
+@keyframes blinkEyes { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.08); } }
+@keyframes spinRing { to { transform: rotate(360deg); } }
+@keyframes tailWag { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(22deg); } }
+@keyframes legRun { 0%, 100% { transform: rotate(18deg); } 50% { transform: rotate(-18deg); } }
+@keyframes dogBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes portalSwirl { 0% { transform: scale(.2) rotate(0); opacity: 0; } 40% { opacity: 1; } 100% { transform: scale(1.4) rotate(180deg); opacity: 0; } }
+@keyframes riseIn { from { opacity: 0; transform: translateY(40px) scale(.92); } to { opacity: 1; transform: none; } }
+@keyframes throwArc {
+  0% { transform: translate(0,0) rotate(0); opacity: 1; }
+  50% { transform: translate(300px,-190px) rotate(320deg); opacity: 1; }
+  100% { transform: translate(560px,10px) rotate(640deg); opacity: 1; }
+}
+@keyframes dogRunRight { from { transform: translateX(0); } to { transform: translateX(560px); } }
+@keyframes dogRunBack { from { transform: translateX(560px); } to { transform: translateX(40px); } }
+
+/* ---------- robot base ---------- */
+.robot-mount, .mini-robot, .stage-robot { perspective: 600px; }
+.robot-svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+.robot-svg .eye { stroke: var(--cyan); stroke-width: 5; stroke-linecap: round; fill: none; }
+.robot-svg .eye-fill { fill: var(--cyan); stroke: none; }
+.robot-svg .eye-ring { fill: none; stroke: var(--cyan); stroke-width: 4; opacity: .85; }
+.robot-svg .eye-dot { fill: var(--cyan); }
+.robot-svg .think-spinner { transform-origin: 100px 74px; animation: spinRing 1.2s linear infinite; }
+.robot-svg .mouth { fill: var(--cyan); }
+.robot-svg .mouth-talking { animation: mouthTalk .32s ease-in-out infinite alternate; transform-origin: 100px 90px; }
+@keyframes mouthTalk { from { transform: scaleY(.4); } to { transform: scaleY(1.4); } }
+
+.robot-svg .chest-code { fill: var(--cyan); font-family: var(--font-mono); font-size: 17px; font-weight: 700; }
+.robot-svg .core-light, .robot-svg .antenna-tip, .robot-svg .ear-light { fill: var(--cyan); animation: glowPulse 2.4s ease-in-out infinite; }
+.robot-svg .antenna { stroke: #3a4f63; stroke-width: 3; }
+.robot-svg .hand { fill: #8fa9c0; stroke: #3a4f63; stroke-width: 2; }
+.robot-svg .hover-glow { fill: rgba(39,229,240,.28); animation: glowPulse 2.8s ease-in-out infinite; }
+.robot-svg .hover-ring { fill: none; stroke: var(--cyan); stroke-width: 2; opacity: .6; }
+
+/* transform origins */
+.robot-svg .r-headgroup { transform-origin: 100px 150px; }
+.robot-svg .r-head { transform-origin: 100px 110px; }
+.robot-svg .r-torso { transform-origin: 100px 185px; }
+.robot-svg .r-arm { transform-origin: 52px 162px; }
+.robot-svg .r-arm-right { transform-origin: 148px 162px; }
+.robot-svg .r-eyes { transform-origin: 100px 74px; }
+
+/* idle: gentle hover + breathing + occasional blink */
+.r-idle .robot-svg, .robot-svg { animation: floatY 3.6s ease-in-out infinite; }
+.r-idle .r-eyes { animation: blinkEyes 5.2s ease-in-out infinite; }
+.r-idle .r-head { animation: headSway 7s ease-in-out infinite; }
+@keyframes headSway { 0%, 100% { transform: rotate(0deg); } 30% { transform: rotate(-4deg); } 65% { transform: rotate(4deg); } }
+
+/* greeting: wave right arm, happy eyes, head tilt */
+.r-greeting .r-arm-right { animation: waveArm 1s ease-in-out 3; }
+@keyframes waveArm { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-58deg); } }
+.r-greeting .r-head { animation: greetTilt .8s ease-in-out 2 alternate; }
+@keyframes greetTilt { from { transform: rotate(-7deg); } to { transform: rotate(7deg); } }
+
+/* thinking: spinner eyes + slow head bob */
+.r-thinking .r-head { animation: thinkBob 1.6s ease-in-out infinite; }
+@keyframes thinkBob { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(4px) rotate(3deg); } }
+
+/* speaking: head gestures + eye pulse */
+.r-speaking .r-head { animation: speakNod .9s ease-in-out infinite; }
+@keyframes speakNod { 0%, 100% { transform: rotate(-2deg) translateY(0); } 50% { transform: rotate(2deg) translateY(-3px); } }
+.r-speaking .r-eyes { animation: blinkEyes 4s ease-in-out infinite; }
+
+/* excited: bounce + bright eyes */
+.r-excited .robot-svg { animation: excitedBounce .55s ease-in-out 3; }
+@keyframes excitedBounce { 0%, 100% { transform: translateY(0) scale(1); } 40% { transform: translateY(-22px) scale(1.03); } }
+
+/* explaining: point with right arm toward content */
+.r-explaining .r-arm-right { animation: pointArm 1.4s ease-in-out infinite; transform-origin: 148px 162px; }
+@keyframes pointArm { 0%, 100% { transform: rotate(-24deg); } 50% { transform: rotate(-38deg); } }
+.r-explaining .r-head { animation: explainLook 1.4s ease-in-out infinite; }
+@keyframes explainLook { 0%, 100% { transform: rotate(6deg); } 50% { transform: rotate(10deg); } }
+
+/* listening: lean forward, focused eyes */
+.r-listening .r-headgroup { animation: leanIn .6s ease forwards; }
+@keyframes leanIn { to { transform: translateY(8px) rotate(2deg); } }
+
+/* transitioning / returning: turn + glide */
+.r-transitioning .robot-svg { animation: glideTurn 1.2s ease-in-out infinite; }
+@keyframes glideTurn { 0%, 100% { transform: translateX(0) rotateY(0); } 50% { transform: translateX(14px) rotateY(24deg); } }
+.r-returning .robot-svg { animation: glideBack 1s ease-in-out 1; }
+@keyframes glideBack { from { transform: translateX(60px); opacity: .4; } to { transform: none; opacity: 1; } }
+
+/* waving / goodbye */
+.r-waving .r-arm-right, .r-goodbye .r-arm-right { animation: waveArm .8s ease-in-out 4; }
+
+/* ---------- portal entrance ---------- */
+.portal {
+  position: absolute; left: 50%; top: 44%; width: 220px; height: 220px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(39,229,240,.5) 0%, rgba(102,199,255,.18) 45%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+  animation: portalSwirl 1.4s ease-out both;
+}
+.robot-enter { animation: riseIn .9s cubic-bezier(.2,.9,.25,1.2) both; }
+
+/* ---------- photo scanline ---------- */
+.photo-frame .scan::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 34px;
+  background: linear-gradient(transparent, rgba(39,229,240,.18), transparent);
+  animation: scanline 4.5s linear infinite;
+}
+
+/* ---------- dog base ---------- */
+.dog-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.dog-svg .eye { stroke: var(--cyan); stroke-width: 4; stroke-linecap: round; fill: none; }
+.dog-svg .dog-nose { fill: #22303f; }
+.dog-svg .dog-code { fill: var(--cyan); font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
+.dog-svg .dog-ear-glow, .dog-svg .dog-tail-tip { fill: var(--cyan); }
+.dog-svg .dog-shadow { fill: rgba(0,0,0,.4); }
+.dog-svg .dog-stick-slot { fill: var(--yellow); opacity: 0; filter: drop-shadow(0 0 6px rgba(255,209,102,.8)); }
+.dog-svg .dog-tail { transform-origin: 40px 95px; animation: tailWag 1.1s ease-in-out infinite; }
+.dog-svg .dog-leg { transform-origin: 50% 20%; }
+.dog-svg .dog-head { transform-origin: 170px 90px; }
+
+/* stage choreography */
+.stage-dog.appear { opacity: 1; transition: opacity .3s ease; }
+.stage-dog.run .dog-svg { animation: dogBob .3s ease-in-out infinite; }
+.stage-dog.run .dog-leg-fl { animation: legRun .28s ease-in-out infinite; }
+.stage-dog.run .dog-leg-br { animation: legRun .28s ease-in-out infinite; }
+.stage-dog.run .dog-leg-fr { animation: legRun .28s ease-in-out infinite reverse; }
+.stage-dog.run .dog-leg-bl { animation: legRun .28s ease-in-out infinite reverse; }
+.stage-dog.run { animation: dogRunRight 1.25s cubic-bezier(.4,.1,.6,.9) forwards; }
+.stage-dog.return { animation: dogRunBack 1.25s cubic-bezier(.4,.1,.6,.9) forwards; }
+.stage-dog.has-stick .dog-stick-slot { opacity: 1; }
+.stage-dog.sit .dog-svg { animation: none; }
+.stage-dog.sit .dog-leg { transform: rotate(0deg); }
+
+.stage-stick.thrown { opacity: 1; animation: throwArc 1.1s cubic-bezier(.3,.4,.5,1) forwards; }
+.stage-stick.caught { opacity: 0; transition: opacity .2s; }
+
+.stage-robot.reach .r-arm-right { animation: pointArm .6s ease-in-out 1; }
+.stage-robot.throw .r-arm-right { animation: throwMotion .6s ease-in-out 1; transform-origin: 148px 162px; }
+@keyframes throwMotion { 0% { transform: rotate(40deg); } 60% { transform: rotate(-70deg); } 100% { transform: rotate(-20deg); } }
+.stage-robot.catch .r-arm-right { animation: catchMotion .5s ease-in-out 1; }
+@keyframes catchMotion { 0% { transform: rotate(-30deg); } 50% { transform: rotate(10deg); } 100% { transform: rotate(0); } }
+
+/* ---------- menu entrance ---------- */
+.menu-card.is-in { animation: cardIn .45s ease both; }
+@keyframes cardIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* ---------- boot ---------- */
+.boot-line.show { opacity: 1; transition: opacity .3s ease; }
+
+/* ---------- custom cursor ---------- */
+@keyframes tapPress { 0% { transform: scale(1); } 40% { transform: scale(.7) translateY(2px); } 100% { transform: scale(1); } }
+@keyframes rippleOut {
+  0% { transform: scale(.35); opacity: .95; }
+  100% { transform: scale(3.4); opacity: 0; }
+}
