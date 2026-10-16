@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Devansh Shah | AI Engineer, Generative AI &amp; Agentic AI</title>
+  <meta name="description" content="Portfolio of Devansh Shah — AI Engineer specializing in LLMs, RAG systems, semantic search, and machine learning. M.S. Artificial Intelligence (UTSA '26, 3.93 GPA), SIGCSE 2026 publication. Guided tour by a tiny AI robot.">
+  <meta name="author" content="Devansh Shah">
+  <link rel="canonical" href="https://devanshshah2002.github.io/devansh-portfolio/">
+  <meta property="og:title" content="Devansh Shah | AI Engineer, Generative AI & Agentic AI">
+  <meta property="og:description" content="Meet Devansh's AI agent — your guide to the projects, research, and engineering of an AI engineer. Adaptive RAG, multi-agent systems, LLM fine-tuning.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/images/portrait-bw.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#05080D">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2305080D'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='monospace' font-size='14' fill='%2327E5F0'%3E&lt;/&gt;%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+  <!-- ============ BOOT SCREEN ============ -->
+  <div id="boot-screen" role="status" aria-label="Initializing personal AI interface">
+    <div class="boot-terminal">
+      <div class="boot-head">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span style="margin-left:.6rem">devansh.shah — personal ai interface</span>
+      </div>
+      <div class="boot-body" id="boot-body" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <!-- ============ HUD COMMAND CENTER ============ -->
+  <nav id="hud" aria-label="Command center" hidden>
+    <span class="hud-brand"><b>Devansh Shah</b><span style="color:var(--muted)">//</span> <span class="hud-brand-accent">AI Agent</span></span>
+    <button class="hud-btn" data-hud="home" type="button">⌂ HOME</button>
+    <button class="hud-btn" data-hud="menu" type="button">☰ MENU</button>
+    <button class="hud-btn" data-hud="back" type="button">← BACK</button>
+    <span class="hud-sep" aria-hidden="true"></span>
+    <button class="hud-btn" data-hud="motion" type="button" aria-pressed="false" title="Toggle reduced motion">◐ MOTION</button>
+    <button class="hud-btn" data-hud="sound" type="button" aria-pressed="false" title="Toggle sound">♪ SOUND</button>
+    <span class="hud-sep" aria-hidden="true"></span>
+    <a class="hud-btn" href="assets/resume/Devansh_Shah_Resume.pdf" download>⬇ RESUME</a>
+    <a class="hud-btn" href="https://www.linkedin.com/in/devanshshah2002" target="_blank" rel="noopener">in LINKEDIN</a>
+    <span class="hud-status" aria-hidden="true"><span class="pulse"></span><span class="hud-label-long">AGENT ONLINE</span></span>
+  </nav>
+
+  <button class="btn btn-ghost btn-sm skip-intro" id="skip-intro" type="button">SKIP INTRO ⏭</button>
+
+  <!-- ============ APP ============ -->
+  <div id="app" hidden>
+
+    <!-- HERO -->
+    <section id="hero-screen" class="screen is-active" aria-label="Welcome">
+      <div class="hero-stage">
+        <div class="hero-robot-zone">
+          <div class="robot-platform" id="robot-platform">
+            <div class="robot-mount" id="robot-mount" data-robot-id="main"></div>
+          </div>
+          <div class="speech-bubble" id="hero-bubble" role="status">
+            <p class="bubble-text"></p>
+            <button class="bubble-skip" id="bubble-skip" type="button">skip ▸</button>
+          </div>
+        </div>
+        <div class="hero-menu-zone">
+          <div class="hero-menu-head">
+            <p class="eyebrow">Personal AI Interface</p>
+            <h1>DEVANSH.SHAH <span class="accent">//</span> <span id="menu-head-suffix">SELECT A DESTINATION</span></h1>
+            <p class="section-sub" style="margin-bottom:0">Your guide is ready. Pick a module — the agent will brief you, then walk you in.</p>
+          </div>
+          <div class="menu-grid" id="menu-grid" role="list"></div>
+          <div id="summary-panel" aria-live="polite">
+            <h3 id="summary-kicker">// MODULE BRIEF</h3>
+            <p class="sum-body" id="summary-body"></p>
+            <p class="explore-ask" id="explore-ask"></p>
+            <div class="explore-btns">
+              <button class="btn btn-primary" id="btn-explore" type="button">YES, LET'S EXPLORE →</button>
+              <button class="btn" id="btn-summary-only" type="button">JUST THE SUMMARY</button>
+              <button class="btn btn-ghost" id="btn-back-menu" type="button">← BACK TO MENU</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION -->
+    <section id="section-screen" class="screen" aria-label="Portfolio section">
+      <div class="section-head">
+        <div class="mini-robot" id="section-robot" data-robot-id="section" aria-hidden="true"></div>
+        <div>
+          <p class="eyebrow" id="section-eyebrow">// MODULE</p>
+          <h2 class="section-title" id="section-title"></h2>
+          <p class="section-sub" id="section-sub"></p>
+        </div>
+      </div>
+      <div class="section-tools">
+        <button class="btn btn-sm" id="btn-section-back" type="button">← BACK TO MENU</button>
+        <button class="btn btn-sm btn-ghost" id="btn-replay-intro" type="button">↻ REPLAY INTRO</button>
+      </div>
+      <div id="section-body"></div>
+    </section>
+
+    <!-- TERMINAL -->
+    <div id="terminal-wrap">
+      <div class="terminal" role="region" aria-label="Command terminal">
+        <div class="term-log" id="term-log" aria-live="polite"></div>
+        <div class="term-input-row">
+          <span class="term-prompt" aria-hidden="true">devansh.shah ~ $</span>
+          <input id="term-input" type="text" autocomplete="off" spellcheck="false"
+                 aria-label="Terminal command. Type help for commands." placeholder="type 'help' for commands…">
+          <span class="term-hint">↵ run · esc clear</span>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-foot">
+      <div>© 2026 <span class="sig">Devansh Shah</span> · AI Engineer · Maryland, USA</div>
+      <div style="margin-top:.4rem">guided by a tiny robot · no AI API required · <span class="sig">&lt;/&gt;</span> built with vanilla HTML/CSS/JS</div>
+    </footer>
+  </div>
+
+  <!-- ============ FLOATING CMD CHATBOT ============ -->
+  <button id="chatbot-fab" type="button" aria-label="Open AI assistant" aria-expanded="false" aria-controls="chatbot-panel">
+    <span class="fab-prompt" aria-hidden="true">devansh.shah ~ $</span>
+    <span class="fab-label">CMD</span>
+  </button>
+
+  <div id="chatbot-panel" role="dialog" aria-modal="false" aria-labelledby="chatbot-title" hidden>
+    <div class="chatbot-head">
+      <span class="chatbot-title" id="chatbot-title">DEVANSH_AGENT <span style="color:var(--muted)">//</span> COMMAND CENTER</span>
+      <div class="chatbot-head-btns">
+        <button id="chatbot-home" type="button" title="Back to portfolio home" aria-label="Back to portfolio home">⌂</button>
+        <button id="chatbot-min" type="button" title="Minimize" aria-label="Minimize assistant">—</button>
+        <button id="chatbot-close" type="button" title="Close" aria-label="Close assistant">✕</button>
+      </div>
+    </div>
+    <div class="chatbot-body" id="chatbot-body" aria-live="polite"></div>
+  </div>
+
+  <!-- ============ CASE STUDY MODAL ============ -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="btn btn-sm btn-ghost modal-close" id="modal-close" type="button">✕ CLOSE</button>
+      <p class="kicker" id="modal-kicker">// CASE STUDY</p>
+      <h2 id="modal-title"></h2>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <noscript>
+    <div style="max-width:720px;margin:4rem auto;padding:2rem;font-family:sans-serif;color:#e5f1ff;background:#0a101a;border:1px solid #203247;border-radius:12px">
+      <h1>Devansh Shah — AI Engineer</h1>
+      <p>This interactive portfolio needs JavaScript. The short version: Devansh Shah is an AI Engineer (M.S. Artificial Intelligence, UTSA 2026, GPA 3.93) specializing in LLMs, RAG systems, semantic search, and machine learning.</p>
+      <p>LinkedIn: https://www.linkedin.com/in/devanshshah2002 · GitHub: https://github.com/devanshshah2002 · <a href="assets/resume/Devansh_Shah_Resume.pdf" style="color:#27e5f0">Download resume (PDF)</a></p>
+    </div>
+  </noscript>
+
+  <script src="js/data.js"></script>
+  <script src="js/robot.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
